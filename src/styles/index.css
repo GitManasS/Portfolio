@@ -1,0 +1,243 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme tokens — dark (default) */
+:root {
+  --color-bg: #05070b;
+  --color-surface: #080b12;
+  --color-card: #0c1018;
+  --color-accent: #5eb0ff;
+  --color-accent-soft: rgba(94, 176, 255, 0.16);
+  --color-terminal: #5eead4;
+  --color-text: #eef2f9;
+  --color-muted: #8b95aa;
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-on-accent: #030508;
+  --color-track: rgba(255, 255, 255, 0.07);
+  --color-surface-hover: rgba(255, 255, 255, 0.06);
+  --shadow-glow: 0 0 48px rgba(94, 176, 255, 0.14), 0 0 96px rgba(94, 234, 212, 0.05);
+  --shadow-glow-sm: 0 0 24px rgba(94, 176, 255, 0.12);
+  --shadow-card: 0 4px 28px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(94, 176, 255, 0.22);
+  --grid-line: rgba(94, 176, 255, 0.05);
+}
+
+/* Light — warm paper base, lifted cards, richer depth */
+.light-mode {
+  --color-bg: #eef1f7;
+  --color-surface: #e4e9f3;
+  --color-card: #ffffff;
+  --color-accent: #155ccc;
+  --color-accent-soft: rgba(21, 92, 204, 0.14);
+  --color-terminal: #0f766e;
+  --color-text: #0b1220;
+  --color-muted: #5a6578;
+  --color-line: rgba(15, 23, 42, 0.1);
+  --color-on-accent: #ffffff;
+  --color-track: rgba(15, 23, 42, 0.06);
+  --color-surface-hover: rgba(21, 92, 204, 0.08);
+  --shadow-glow: 0 8px 32px rgba(21, 92, 204, 0.14);
+  --shadow-glow-sm: 0 2px 16px rgba(21, 92, 204, 0.12);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.85) inset, 0 1px 2px rgba(15, 23, 42, 0.05),
+    0 12px 40px rgba(15, 23, 42, 0.08);
+  --shadow-card-hover: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 16px 48px rgba(15, 23, 42, 0.1),
+    0 0 0 1px rgba(21, 92, 204, 0.2);
+  --grid-line: rgba(21, 92, 204, 0.07);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bg text-text antialiased font-sans;
+    background-image: radial-gradient(1200px 600px at 12% -10%, var(--color-accent-soft), transparent 55%),
+      radial-gradient(900px 500px at 88% 0%, rgba(94, 234, 212, 0.06), transparent 50%);
+    background-attachment: fixed;
+  }
+  .light-mode body {
+    background-image: radial-gradient(1100px 520px at 8% -6%, rgba(21, 92, 204, 0.11), transparent 58%),
+      radial-gradient(900px 480px at 94% 8%, rgba(15, 118, 110, 0.08), transparent 52%),
+      radial-gradient(700px 400px at 50% 100%, rgba(251, 146, 60, 0.05), transparent 55%);
+  }
+  ::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-text);
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) var(--color-bg);
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 6px;
+  border: 2px solid var(--color-bg);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+.light-mode * {
+  scrollbar-color: rgba(15, 23, 42, 0.22) var(--color-bg);
+}
+.light-mode *::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.18);
+  border: 2px solid var(--color-bg);
+}
+.light-mode *::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.3);
+}
+
+@layer components {
+  .bg-grid-dev {
+    background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .mesh-blob {
+    @apply pointer-events-none absolute rounded-full blur-[100px] opacity-90 animate-mesh-shift;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .custom-scrollbar {
+    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  }
+  .light-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(15, 23, 42, 0.2);
+  }
+  .light-mode .custom-scrollbar {
+    scrollbar-color: rgba(15, 23, 42, 0.2) transparent;
+  }
+
+  /* MongoDB Compass panel — theme-aware chrome */
+  .mongo-compass {
+    --mc-shell: #121418;
+    --mc-chrome: #1a1d24;
+    --mc-sidebar: #16181d;
+    --mc-editor: #0f1115;
+    --mc-tabs: #16181d;
+    --mc-filter: #14161c;
+    --mc-border: rgba(255, 255, 255, 0.1);
+    --mc-border-subtle: rgba(255, 255, 255, 0.05);
+    --mc-stack-bg: #1e2128;
+    --mc-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  }
+  .light-mode .mongo-compass {
+    --mc-shell: #ffffff;
+    --mc-chrome: #f1f5f9;
+    --mc-sidebar: #f8fafc;
+    --mc-editor: #fafbfc;
+    --mc-tabs: #f1f5f9;
+    --mc-filter: #f8fafc;
+    --mc-border: rgba(15, 23, 42, 0.1);
+    --mc-border-subtle: rgba(15, 23, 42, 0.06);
+    --mc-stack-bg: #ffffff;
+    --mc-shadow: 0 20px 56px rgba(15, 23, 42, 0.09), 0 1px 0 rgba(255, 255, 255, 0.95) inset;
+  }
+
+  .mongo-compass {
+    background: var(--mc-shell);
+    box-shadow: var(--mc-shadow);
+  }
+  .mongo-compass .mongo-divide-b {
+    border-bottom: 1px solid var(--mc-border);
+  }
+  .mongo-compass .mongo-divide-b-subtle {
+    border-bottom: 1px solid var(--mc-border-subtle);
+  }
+  .mongo-compass .mongo-sidebar {
+    border-bottom: 1px solid var(--mc-border);
+  }
+  @media (min-width: 1024px) {
+    .mongo-compass .mongo-sidebar {
+      border-bottom: none;
+      border-right: 1px solid var(--mc-border);
+    }
+  }
+
+  /* Postman hero panel — theme-aware */
+  .postman-chrome {
+    --pm-outer: #1a1c21;
+    --pm-titlebar: #23262d;
+    --pm-rail: #1e2128;
+    --pm-request: #252830;
+    --pm-url: #1a1d24;
+    --pm-tabs: #1e2128;
+    --pm-tab-active: #1a1c21;
+    --pm-response: #14161c;
+    --pm-border: rgba(255, 255, 255, 0.1);
+    --pm-border-subtle: rgba(255, 255, 255, 0.05);
+    --pm-outer-shadow: 0 24px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  }
+  .light-mode .postman-chrome {
+    --pm-outer: #fcfcfd;
+    --pm-titlebar: #f1f5f9;
+    --pm-rail: #eef2f7;
+    --pm-request: #f8fafc;
+    --pm-url: #ffffff;
+    --pm-tabs: #eef2f7;
+    --pm-tab-active: #ffffff;
+    --pm-response: #fafbfc;
+    --pm-border: rgba(15, 23, 42, 0.1);
+    --pm-border-subtle: rgba(15, 23, 42, 0.06);
+    --pm-outer-shadow: 0 20px 56px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+  }
+
+  .postman-chrome {
+    background: var(--pm-outer);
+    box-shadow: var(--pm-outer-shadow);
+  }
+  .postman-chrome .pm-divide-b {
+    border-bottom: 1px solid var(--pm-border);
+  }
+  .postman-chrome .pm-divide-r {
+    border-right: 1px solid var(--pm-border);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent via-terminal to-accent bg-clip-text text-transparent;
+  }
+  .glass {
+    border: 1px solid var(--color-line);
+    background: color-mix(in srgb, var(--color-card) 78%, transparent);
+    @apply backdrop-blur-2xl;
+    box-shadow: var(--shadow-card);
+  }
+  .light-mode .glass {
+    background: color-mix(in srgb, var(--color-card) 88%, transparent);
+    box-shadow: var(--shadow-card);
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl bg-accent px-5 py-2.5 font-semibold text-onaccent shadow-glow-sm transition;
+    @apply hover:brightness-110 hover:shadow-glow active:scale-95;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-xl border border-line bg-card px-5 py-2.5 font-semibold text-text shadow-card transition;
+    @apply hover:border-accent hover:bg-surface-hover hover:shadow-card-hover;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-xl bg-transparent px-5 py-2.5 font-semibold text-terminal transition;
+    border: 1px solid color-mix(in srgb, var(--color-terminal) 42%, transparent);
+  }
+  .btn-ghost:hover {
+    border-color: color-mix(in srgb, var(--color-terminal) 65%, transparent);
+    background: color-mix(in srgb, var(--color-terminal) 10%, transparent);
+  }
+}
