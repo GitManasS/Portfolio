@@ -50,8 +50,8 @@ export default function DevOpsSection() {
           </div>
 
           <p className="relative mt-8 text-center text-sm text-muted">
-            Dockerized services, Jenkins pipelines, Azure infrastructure, and NGINX TLS termination for stable
-            production traffic.
+            Dockerized services, Jenkins pipelines, Azure infrastructure, NGINX TLS termination, and cloud deploys
+            (Netlify, Render, Cloudinary) for production-ready apps.
           </p>
         </div>
       </div>

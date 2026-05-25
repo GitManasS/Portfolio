@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { HiXMark } from "react-icons/hi2";
 import { projects } from "../../data/portfolio";
 import SectionHeading from "../ui/SectionHeading";
 
@@ -44,7 +45,10 @@ export default function Projects() {
 
               <div className="flex flex-1 flex-col p-5">
                 <h3 className="font-display text-lg font-semibold text-text">{p.title}</h3>
-                <p className="mt-2 line-clamp-2 text-sm text-muted">{p.description}</p>
+                {p.tagline && (
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-terminal">{p.tagline}</p>
+                )}
+                <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{p.description}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {p.tech.map((t) => (
                     <span
@@ -55,21 +59,48 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-line py-2 text-xs font-medium text-text transition hover:border-accent"
-                  >
-                    <FaGithub /> GitHub
-                  </a>
+                <div className="mt-4 space-y-2">
                   <a
                     href={p.live}
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-accent py-2 text-xs font-semibold text-onaccent shadow-glow-sm transition hover:brightness-110"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent py-2.5 text-xs font-semibold text-onaccent shadow-glow-sm transition hover:brightness-110"
                   >
-                    <FaExternalLinkAlt /> Live
+                    <FaExternalLinkAlt /> Live demo
                   </a>
+                  <div
+                    className={`grid gap-2 ${
+                      (p.repos?.length ?? 0) >= 3
+                        ? "grid-cols-3"
+                        : p.repos?.length === 2
+                          ? "grid-cols-2"
+                          : "grid-cols-1"
+                    }`}
+                  >
+                    {p.repos?.length
+                      ? p.repos.map((repo) => (
+                          <a
+                            key={repo.label}
+                            href={repo.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-line bg-surface/60 py-2 font-mono text-[10px] font-medium text-text transition hover:border-accent hover:bg-accent-soft hover:text-accent"
+                          >
+                            <FaGithub className="h-3.5 w-3.5 shrink-0" />
+                            {repo.label}
+                          </a>
+                        ))
+                      : p.github && (
+                          <a
+                            href={p.github}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center justify-center gap-2 rounded-lg border border-line py-2 text-xs font-medium text-text transition hover:border-accent"
+                          >
+                            <FaGithub /> GitHub
+                          </a>
+                        )}
+                  </div>
                 </div>
                 <button
                   type="button"
@@ -98,16 +129,64 @@ export default function Projects() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="max-h-[90vh] w-full max-w-lg overflow-auto rounded-2xl border border-line bg-card p-6 shadow-card-hover"
+              className="relative max-h-[90vh] w-full max-w-lg overflow-auto rounded-2xl border border-line bg-card p-6 shadow-card-hover"
             >
-              <h3 className="font-display text-xl font-semibold">{active.title}</h3>
-              <p className="mt-3 text-sm text-muted">{active.description}</p>
+              <button
+                type="button"
+                onClick={() => setOpenId(null)}
+                className="absolute right-4 top-4 rounded-lg border border-line bg-surface/80 p-1.5 text-muted transition hover:border-accent hover:bg-surface-hover hover:text-text"
+                aria-label="Close"
+              >
+                <HiXMark className="h-5 w-5" aria-hidden />
+              </button>
+              <div className="pr-10">
+                <h3 className="font-display text-xl font-semibold">{active.title}</h3>
+                {active.tagline && (
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-terminal">{active.tagline}</p>
+                )}
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-muted">{active.description}</p>
               <p className="mt-4 font-mono text-xs text-terminal">Highlights</p>
-              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted">
+              <ul className="mt-2 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted">
                 {active.highlights.map((h) => (
                   <li key={h}>{h}</li>
                 ))}
               </ul>
+              {(active.live || active.repos?.length || active.github) && (
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {active.live && active.live !== "#" && (
+                    <a
+                      href={active.live}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg bg-accent px-3 py-2 text-xs font-semibold text-onaccent"
+                    >
+                      <FaExternalLinkAlt /> Live
+                    </a>
+                  )}
+                  {active.repos?.map((repo) => (
+                    <a
+                      key={repo.label}
+                      href={repo.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg border border-line px-3 py-2 font-mono text-xs text-text hover:border-accent"
+                    >
+                      <FaGithub /> {repo.label}
+                    </a>
+                  ))}
+                  {!active.repos?.length && active.github && (
+                    <a
+                      href={active.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-xs text-text hover:border-accent"
+                    >
+                      <FaGithub /> GitHub
+                    </a>
+                  )}
+                </div>
+              )}
               <button
                 type="button"
                 className="mt-6 w-full rounded-xl border border-line py-2.5 font-mono text-sm transition hover:border-accent"
