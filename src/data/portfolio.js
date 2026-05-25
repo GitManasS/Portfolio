@@ -53,7 +53,7 @@ export const projects = [
       "Full-stack HR Management System with JWT auth and RBAC for employees, managers, HR, and admin — attendance, leave, payroll, reimbursements, onboarding, and org hierarchy.",
     image:
       "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
-    live: "https://hrms-webapp1.netlify.app/",
+    live: "https://hrms-mgworks.netlify.app/",
     repos: [
       { label: "Frontend", url: "https://github.com/GitManasS/HRMS_Frontend_WebApp" },
       { label: "Backend", url: "https://github.com/GitManasS/HRMS_Backend_WebApp" },
@@ -84,7 +84,7 @@ export const projects = [
       "Full-stack MERN e-commerce for grocery, dry fruits, and herbal products — customer browsing, cart, Razorpay checkout, order tracking, and an admin panel for catalog, inventory, coupons, and fulfillment.",
     image:
       "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80",
-    live: "https://mgkirana.netlify.app/",
+    live: "https://mg-kirana.netlify.app/",
     repos: [
       { label: "Frontend", url: "https://github.com/GitManasS/MGKirana-Frontend" },
       { label: "Backend", url: "https://github.com/GitManasS/MGKirana-Backend" },
@@ -118,7 +118,7 @@ export const projects = [
       "Multi-role SaaS hiring platform connecting candidates and recruiters — AI resume parsing, ATS scoring, JD matching, interview prep, job applications, Kanban pipelines, and org-branded career portals under JWT + RBAC.",
     image:
       "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80",
-    live: "https://resume-intelligence.netlify.app/",
+    live: "https://resume-intel.netlify.app/",
     repos: [
       { label: "Frontend", url: "https://github.com/GitManasS/ResumeIntel-Frontend" },
       { label: "Backend", url: "https://github.com/GitManasS/ResumeIntel-Backend" },
